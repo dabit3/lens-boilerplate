@@ -70,8 +70,8 @@ export function Nav() {
   console.log('wallet: ', wallet)
 
   return (
-    <nav className='border-b p-4 pl-10 flex items-center'>
-      <div className='flex flex-1'>
+    <nav className='border-b p-4 pl-10 flex sm:flex-row sm:items-center flex-col'>
+      <div className='flex flex-1 flex-row'>
         <Link href='/'>
           <h1 className='text-gray'><span className='font-bold'>Lens</span> Protocol</h1>
         </Link>
@@ -86,7 +86,18 @@ export function Nav() {
           <p className='ml-4 text-muted-foreground'>Publications</p>
         </Link>
       </div>
-      <div className='mr-4 flex items-center'>
+      <div className='sm:hidden mt-3'>
+        {
+          isClient && !address && (
+            <Button variant='outline' className='mr-3' onClick={connectWallet}>
+              <LogIn className='mr-2' />
+              Connect Wallet
+            </Button>
+          ) 
+        }
+        <ModeToggle />
+      </div>
+      <div className='mr-4 sm:flex items-center hidden '>
         {
           isClient && !address && (
             <Button variant='outline' className='mr-3' onClick={connectWallet}>
