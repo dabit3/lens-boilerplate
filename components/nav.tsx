@@ -11,7 +11,7 @@ import {
 } from '@lens-protocol/react-web'
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
-import { useWeb3Modal } from '@web3modal/react'
+import { useWeb3Modal } from '@web3modal/wagmi/react'
 import Link from 'next/link'
 
 export function Nav() {
