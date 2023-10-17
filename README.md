@@ -1,6 +1,10 @@
 ## Getting Started
 
-First, run the development server:
+1. Go to [WalletConnect Dashboard](https://cloud.walletconnect.com/) and get a Project ID.
+
+2. Copy `.example.env.local` into a new file called `.env` and set your WalletConnect Project ID
+
+3. Run the development server:
 
 ```bash
 npm run dev
