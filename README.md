@@ -2,7 +2,7 @@
 
 1. Go to [WalletConnect Dashboard](https://cloud.walletconnect.com/) and get a Project ID.
 
-2. Copy `.example.env.local` into a new file called `.env` and set your WalletConnect Project ID
+2. Copy `.example.env.local` into a new file called `.env.local` and set your WalletConnect Project ID
 
 3. Run the development server:
 
