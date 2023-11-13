@@ -4,8 +4,8 @@ import { polygonMumbai, polygon } from "wagmi/chains";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 import { InjectedConnector } from "wagmi/connectors/injected";
-import { LensProvider as Provider, LensConfig, production } from "@lens-protocol/react-web";
-import { bindings as wagmiBindings } from "@lens-protocol/wagmi";
+import { LensProvider as Provider, LensConfig, production } from '@lens-protocol/react-web';
+import { bindings as wagmiBindings } from '@lens-protocol/wagmi';
 
 const { publicClient, webSocketPublicClient } = configureChains(
   [polygonMumbai, polygon],
