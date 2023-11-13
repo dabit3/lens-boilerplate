@@ -77,8 +77,6 @@ export function Nav() {
     }
   }
 
-  if (!isClient) return null
-
   return (
     <nav className='border-b p-4 pl-10 flex sm:flex-row sm:items-center flex-col'>
       <div className='flex flex-1 flex-row'>
@@ -86,7 +84,7 @@ export function Nav() {
           <h1 className='text-gray'><span className='font-bold'>Lens</span> Protocol</h1>
         </Link>
         {
-          isConnected && session && session.type === "WITH_PROFILE" && (
+         isClient && isConnected && session && session.type === "WITH_PROFILE" && (
             <Link href='/profile'>
               <p className='ml-4 text-muted-foreground'>Profile</p>
             </Link>
@@ -98,7 +96,7 @@ export function Nav() {
       </div>
       <div className='sm:hidden mt-3'>
         {
-          !address && (
+          isClient && !address && (
             <Button variant='outline' className='mr-3' onClick={connectWallet}>
               <LogIn className='mr-2' />
               Connect Wallet
@@ -109,7 +107,7 @@ export function Nav() {
       </div>
       <div className='mr-4 sm:flex items-center hidden '>
         {
-           !address && (
+           isClient && !address && (
             <Button variant='outline' className='mr-3' onClick={connectWallet}>
               <LogIn className='mr-2' />
               Connect Wallet
@@ -117,7 +115,7 @@ export function Nav() {
           ) 
         }
         {
-          session && session.type !== "WITH_PROFILE" && address && (
+          isClient && session && session.type !== "WITH_PROFILE" && address && (
             <Button variant='outline' className='mr-3' onClick={onLoginClick}>
             <LogIn className='mr-2' />
             Sign in with Lens.
@@ -125,7 +123,7 @@ export function Nav() {
           )
         }
         {
-          session && session.type === "WITH_PROFILE" &&  isConnected && (
+          isClient && session && session.type === "WITH_PROFILE" &&  isConnected && (
             <Button variant='outline' className='mr-3' onClick={logout}>
               <LogIn className='mr-2' />
               Sign Out.
