@@ -22,15 +22,8 @@ export function Nav() {
   const { disconnectAsync } = useDisconnect()
   const { open, close } = useWeb3Modal()
   const [isClient, setIsClient] = useState(false)
-  const { execute: login, data } = useLogin()
   const { data: session } = useSession()
   const router = useRouter()
-
-  const { data: profiles } = useProfiles({
-    where: {
-      ownedBy: [address || ''],
-    }
-  })
 
   useEffect(() => {
     setIsClient(true)
@@ -59,29 +52,14 @@ export function Nav() {
     }
   }
 
-  let profile = profiles?.length ? profiles[profiles?.length - 1] : null
-
-  const onLoginClick = async () => {
-    if (!profile) return
-    if (isConnected) {
-      await disconnectAsync()
-    }
-
-    const { connector } = await connectAsync()
-    if (connector instanceof InjectedConnector) {
-      const walletClient = await connector.getWalletClient()
-      await login({
-        address: walletClient.account.address,
-        profileId: profile.id
-      })
-    }
-  }
-
   return (
     <nav className='border-b p-4 pl-10 flex sm:flex-row sm:items-center flex-col'>
       <div className='flex flex-1 flex-row'>
         <Link href='/'>
-          <h1 className='text-gray'><span className='font-bold'>Lens</span> Protocol</h1>
+          <h1 className='text-gray'>
+            <span className='font-bold'>Lens</span>
+            Protocol
+          </h1>
         </Link>
         {
          isClient && isConnected && session && session.type === "WITH_PROFILE" && (
@@ -112,14 +90,16 @@ export function Nav() {
               <LogIn className='mr-2' />
               Connect Wallet
             </Button>
-          ) 
+          )
         }
         {
           isClient && session && session.type !== "WITH_PROFILE" && address && (
-            <Button variant='outline' className='mr-3' onClick={onLoginClick}>
-            <LogIn className='mr-2' />
-            Sign in with Lens.
-          </Button>
+            <LoginButton
+              address={address}
+              isConnected={isConnected}
+              disconnectAsync={disconnectAsync}
+              connectAsync={connectAsync}
+            />
           )
         }
         {
@@ -133,5 +113,39 @@ export function Nav() {
         <ModeToggle />
       </div>
     </nav>
+  )
+}
+
+function LoginButton({
+  address, isConnected, disconnectAsync, connectAsync
+}) {
+  const { execute: login } = useLogin()
+  const { data: profiles } = useProfiles({
+    where: {
+      ownedBy: [address]
+    }
+  })
+  let profile = profiles?.length ? profiles[profiles?.length - 1] : null
+
+  const onLoginClick = async () => {
+    if (!profile) return
+    if (isConnected) {
+      await disconnectAsync()
+    }
+
+    const { connector } = await connectAsync()
+    if (connector instanceof InjectedConnector) {
+      const walletClient = await connector.getWalletClient()
+      await login({
+        address: walletClient.account.address,
+        profileId: profile.id
+      })
+    }
+  }
+  return (
+    <Button variant='outline' className='mr-3' onClick={onLoginClick}>
+      <LogIn className='mr-2' />
+      Sign in with Lens.
+    </Button>
   )
 }
