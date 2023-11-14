@@ -5,7 +5,7 @@ import {
 } from '@lens-protocol/react-web'
 import { Profile } from '@lens-protocol/widgets-react'
 
-export default function Search() {
+export default function ProfileComponent() {
   const { data } = useSession();
   if (!data) return null
   return (
