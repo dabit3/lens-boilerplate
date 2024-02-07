@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button'
 import { ModeToggle } from '@/components/mode-toggle'
 import { LogIn } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useModal } from 'connectkit'
+
 import {
   useLogin,
   useLogout,
@@ -13,14 +15,13 @@ import {
 } from '@lens-protocol/react-web'
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
-import { useWeb3Modal } from '@web3modal/wagmi/react'
 import Link from 'next/link'
 
 export function Nav() {
   const { execute: logoutLens } = useLogout()
   const { address, isConnected } = useAccount()
   const { disconnectAsync } = useDisconnect()
-  const { open, close } = useWeb3Modal()
+  const { setOpen } = useModal()
   const [isClient, setIsClient] = useState(false)
   const { data: session } = useSession()
   const router = useRouter()
@@ -35,10 +36,10 @@ export function Nav() {
 
   async function connectWallet() {
     try {
-      open()
+      setOpen(true)
     } catch (err) {
       console.log('error:', err)
-      close()
+      setOpen(false)
     }
   }
 
